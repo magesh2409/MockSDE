@@ -1,8 +1,8 @@
-package com.example.MockSDE.dto;
+package com.example.MockSDE.Dto;
 
 import lombok.Data;
 
-public class baseDto {
+public class BaseDto {
 
     @Data
     public static class homeDto{
