@@ -1,12 +1,18 @@
 package com.example.MockSDE.Dto;
 
+import jakarta.validation.constraints.Email;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 public class UserRegistration {
 
     @Data
     public static class UserRegistrationRequest{
+
+        @Length(min = 2, max = 50)
         private String name;
+
+        @Email
         private String email;
         private String password;
 

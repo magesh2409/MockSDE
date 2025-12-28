@@ -4,6 +4,7 @@ import com.example.MockSDE.Dto.BaseDto;
 import com.example.MockSDE.Dto.UserRegistration;
 import com.example.MockSDE.Repository.UserRepository;
 import com.example.MockSDE.Services.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class ApiController {
     }
 
     @PostMapping("/register")
-    private ResponseEntity<UserRegistration.UserRegistrationResponse> registerUser(@RequestBody UserRegistration.UserRegistrationRequest payload) {
+    private ResponseEntity<UserRegistration.UserRegistrationResponse> registerUser(@Valid @RequestBody UserRegistration.UserRegistrationRequest payload) {
         UserRegistration.UserRegistrationResponse response = userService.registerUser(payload);
         if(response.getUserId() == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

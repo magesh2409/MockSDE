@@ -1,39 +1,38 @@
 package com.example.MockSDE.Models;
-import com.example.MockSDE.Utils.Constants;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Generated;
 import org.bson.types.ObjectId;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
-@Document(collection = "users")
+@Document( collection = "topic")
 @Data
-public class User {
+public class Topic {
 
     @Id
     @Generated
     private ObjectId id;
 
-    @NotBlank
     @NotNull
-    @Length(min = 2, max = 50)
-    private String name;
-
-    @Email
-    private String email;
-
-    private String password;
+    private ObjectId agentId;
 
     @NotNull
-    private Constants.UserStatus status = Constants.UserStatus.ACTIVE;
+    private String topicName;
+
+    @NotNull
+    private String description;
+
+    @NotNull
+    private String toolType;
+
+    @NotNull
+    private HashMap<String,String> hyperParameters;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt = LocalDateTime.now();
-
 }

@@ -4,8 +4,7 @@ import com.example.MockSDE.Dto.UserRegistration;
 import com.example.MockSDE.Mapper.UserMapper;
 import com.example.MockSDE.Models.User;
 import com.example.MockSDE.Repository.PlatformRepository;
-import com.example.MockSDE.Repository.UserRepository;
-import com.example.MockSDE.Utils.ResponseConstants;
+import com.example.MockSDE.Utils.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class UserService {
 
         Optional<User> user = platformRepository.userRepository.findByEmail(data.getEmail());
         if(user.isPresent()){
-            return new UserRegistration.UserRegistrationResponse(user.get().getId().toString(), ResponseConstants.Registration.USER_EXISTS, true);
+            return new UserRegistration.UserRegistrationResponse(user.get().getId().toString(), Constants.Registration.USER_EXISTS, true);
         }
         try{
             String password = data.getPassword();
@@ -34,9 +33,9 @@ public class UserService {
             User newUser = userMapper.toEntity(data);
             newUser.setCreatedAt(LocalDateTime.now());
             newUser = platformRepository.userRepository.save(newUser);
-            return new UserRegistration.UserRegistrationResponse(newUser.getId().toString(), ResponseConstants.Registration.SUCCESS, false);
+            return new UserRegistration.UserRegistrationResponse(newUser.getId().toString(), Constants.Registration.SUCCESS, false);
         } catch (Exception e){
-            return new UserRegistration.UserRegistrationResponse(null, ResponseConstants.Registration.FAILED, false);
+            return new UserRegistration.UserRegistrationResponse(null, Constants.Registration.FAILED, false);
         }
     }
 }
