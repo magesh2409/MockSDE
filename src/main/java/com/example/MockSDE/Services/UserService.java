@@ -3,6 +3,7 @@ package com.example.MockSDE.Services;
 import com.example.MockSDE.Dto.UserRegistration;
 import com.example.MockSDE.Mapper.UserMapper;
 import com.example.MockSDE.Models.User;
+import com.example.MockSDE.Repository.PlatformRepository;
 import com.example.MockSDE.Repository.UserRepository;
 import com.example.MockSDE.Utils.ResponseConstants;
 import lombok.AllArgsConstructor;
@@ -16,12 +17,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService {
 
-    private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private UserMapper userMapper;
+    private PlatformRepository platformRepository;
 
     public UserRegistration.UserRegistrationResponse registerUser(UserRegistration.UserRegistrationRequest data){
-        Optional<User> user = userRepository.findByEmail(data.getEmail());
+        platformRepository.loggerRepository.logger.warn("Registering user with email: " + data.getEmail());
+
+        Optional<User> user = platformRepository.userRepository.findByEmail(data.getEmail());
         if(user.isPresent()){
             return new UserRegistration.UserRegistrationResponse(user.get().getId().toString(), ResponseConstants.Registration.USER_EXISTS, true);
         }
@@ -30,7 +33,7 @@ public class UserService {
             data.setPassword(passwordEncoder.encode(password));
             User newUser = userMapper.toEntity(data);
             newUser.setCreatedAt(LocalDateTime.now());
-            newUser = userRepository.save(newUser);
+            newUser = platformRepository.userRepository.save(newUser);
             return new UserRegistration.UserRegistrationResponse(newUser.getId().toString(), ResponseConstants.Registration.SUCCESS, false);
         } catch (Exception e){
             return new UserRegistration.UserRegistrationResponse(null, ResponseConstants.Registration.FAILED, false);
