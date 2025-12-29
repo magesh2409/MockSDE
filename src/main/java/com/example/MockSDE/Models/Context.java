@@ -8,28 +8,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Document
+@Document( collection = "context")
 @Data
-public class InterviewDetails {
+public class Context {
 
     @Id
     @Generated
     private ObjectId id;
 
-    // Type of interview (e.g., "Technical", "HR", "Behavioral")
-    private String interviewType;
-
-    // AI or human interviewer
-    private String interviewer;
-    private ObjectId userId;
-
-    private ObjectId threadId;
-
-    private LocalDateTime scheduledAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt = LocalDateTime.now();
-
-    private LocalDateTime startedAt;
-    private LocalDateTime endedAt;
-
 }

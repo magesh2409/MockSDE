@@ -1,5 +1,7 @@
 package com.example.MockSDE.Models;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Generated;
 import org.bson.types.ObjectId;
@@ -8,28 +10,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Document
+@Document( collection = "thread" )
 @Data
-public class InterviewDetails {
+public class Thread {
 
     @Id
     @Generated
     private ObjectId id;
 
-    // Type of interview (e.g., "Technical", "HR", "Behavioral")
-    private String interviewType;
+    @NotNull
+    @NotBlank
+    private ObjectId topicId;
 
-    // AI or human interviewer
-    private String interviewer;
-    private ObjectId userId;
+    private ObjectId contextId;
 
-    private ObjectId threadId;
-
-    private LocalDateTime scheduledAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt = LocalDateTime.now();
-
-    private LocalDateTime startedAt;
-    private LocalDateTime endedAt;
-
 }
