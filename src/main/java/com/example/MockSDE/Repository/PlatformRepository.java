@@ -8,4 +8,5 @@ import org.springframework.stereotype.Component;
 public class PlatformRepository {
     public UserRepository userRepository;
     public LoggerRepository loggerRepository;
+    public ServiceRepository serviceRepository;
 }
