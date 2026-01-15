@@ -1,5 +1,6 @@
 package com.example.MockSDE.Dto;
 
+import com.example.MockSDE.Models.Service;
 import com.example.MockSDE.Utils.Constants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -46,6 +47,11 @@ public class ServiceDto {
             this.id = id.toHexString();
             this.userId = userId != null ? userId.toHexString() : null ;
             this.message = message;
+        }
+
+        public ServiceResponse(Service service){
+            this.id = service.getId().toHexString();
+            this.userId = service.getUserId() != null ? service.getUserId().toHexString() : null ;
         }
     }
 
