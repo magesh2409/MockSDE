@@ -11,32 +11,41 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/service")
+@RequestMapping("/api/user/{userId}/service")
 public class ServiceController {
 
     private ServiceService serviceService;
 
 
     @GetMapping("{serviceId}")
-    public ResponseEntity<ServiceDto.GetServiceResponse> getServiceById(@PathVariable("serviceId") ObjectId serviceId) {
+    public ResponseEntity<ServiceDto.GetServiceResponse> getServiceById(
+            @PathVariable("userId") ObjectId userId,
+            @PathVariable("serviceId") ObjectId serviceId) {
         ServiceDto.GetServiceResponse response = serviceService.getService(serviceId);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<ServiceDto.ServiceResponse> createService(@RequestBody ServiceDto.CreateService payload) {
+    public ResponseEntity<ServiceDto.ServiceResponse> createService(
+            @PathVariable("userId") ObjectId userId,
+            @Valid @RequestBody ServiceDto.CreateService payload) {
         ServiceDto.ServiceResponse response = serviceService.createService(payload);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PatchMapping("{serviceId}")
-    public ResponseEntity<ServiceDto.ServiceResponse> updateService(@PathVariable("serviceId") ObjectId serviceId, @Valid @RequestBody ServiceDto.UpdateService payload){
+    public ResponseEntity<ServiceDto.ServiceResponse> updateService(
+            @PathVariable("userId") ObjectId userId,
+            @PathVariable("serviceId") ObjectId serviceId,
+            @Valid @RequestBody ServiceDto.UpdateService payload){
         ServiceDto.ServiceResponse response = serviceService.updateService(serviceId, payload);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("{serviceId}")
-    public ResponseEntity<ServiceDto.ServiceResponse> deleteService(@PathVariable("serviceId") ObjectId serviceId) {
+    public ResponseEntity<ServiceDto.ServiceResponse> deleteService(
+            @PathVariable("userId") ObjectId userId,
+            @PathVariable("serviceId") ObjectId serviceId) {
         ServiceDto.ServiceResponse response = serviceService.deleteService(serviceId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
